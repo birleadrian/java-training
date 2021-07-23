@@ -43,8 +43,29 @@ public class Pawn {
         pieceColor = value;
     }
 
+    public int getDirection(){
+       if(getPieceColor() == PieceColor.WHITE){
+           return 1;
+       }
+       return -1;
+    }
     public void Move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        if (movementType == MovementType.MOVE && getChesssBoard().IsLegalBoardPosition(newX, newY) && getChesssBoard().getPieces()[newX][newY] == null) {
+            if(newX != xCoordinate){
+                System.out.println("You've tried an invalid move on x coordinate");
+            }else {
+                if (yCoordinate + getDirection() == newY) {
+                    getChesssBoard().getPieces()[this.xCoordinate][this.yCoordinate] = null;
+                    this.yCoordinate = newY;
+                    getChesssBoard().getPieces()[newX][newY] = this;
+                }
+                else{
+                    System.out.println("You can move only 1 space forward");
+                }
+            }
+        } else {
+            System.out.println("Capture not implemented yet");
+        }
     }
 
     @Override
